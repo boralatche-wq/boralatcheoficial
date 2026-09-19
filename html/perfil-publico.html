@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil Profissional | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .perfil-capa {
+    height: 150px;
+    background: var(--logo-gradiente);
+    position: relative;
+  }
+
+  .perfil-avatar-wrap {
+    position: absolute;
+    bottom: -56px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #fotoPerfil {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--verde-mate);
+    box-shadow: var(--sombra);
+    background: var(--cuia);
+    display: block;
+  }
+
+  .perfil-info-central {
+    text-align: center;
+    padding: 66px 20px 6px;
+  }
+
+  .perfil-info-central h2 { margin-bottom: 6px; }
+
+  #tipoUsuarioBadge {
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  #enderecoUsuario, #notaUsuario {
+    font-size: .88rem;
+    color: var(--cuia-suave);
+    margin: 3px 0;
+  }
+  #notaUsuario { color: var(--dourado-mate); font-weight: 600; }
+
+  .perfil-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 14px 20px 4px;
+  }
+
+  .perfil-contato {
+    display: flex;
+    justify-content: center;
+    margin: 14px 20px 0;
+  }
+  .perfil-contato .btn-whatsapp { width: 100%; max-width: 280px; }
+
+  .secao-titulo-central {
+    text-align: center;
+    color: var(--cuia-suave);
+    padding: 26px 20px 4px;
+    font-size: 1rem;
+  }
+
+  #semServicos {
+    text-align: center;
+    color: var(--cinza-texto);
+    padding: 20px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+  <div class="perfil-capa">
+    <div class="perfil-avatar-wrap">
+      <img id="fotoPerfil" src="../img/avatar.png">
+    </div>
+  </div>
+
+  <div class="perfil-info-central">
+    <h2 id="nomeUsuario"></h2>
+    <span id="tipoUsuarioBadge" class="match-badge match-badge-servico"></span>
+    <p id="enderecoUsuario"></p>
+    <p id="notaUsuario"></p>
+
+    <div class="perfil-tags" id="perfilTags"></div>
+
+    <div class="perfil-contato" id="perfilContato"></div>
+  </div>
+
+  <div class="secao-titulo-central">✂️ Serviços oferecidos</div>
+  <section id="gridProdutos" class="matches-grid"></section>
+  <p id="semServicos">Esse profissional ainda não cadastrou serviços ativos.</p>
+
+<div id="app-nav"></div>
+
+  <script type="module" src="../js/perfil-publico.js"></script>
+</body>
+</html>

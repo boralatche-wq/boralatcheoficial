@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descobrir | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <header class="topo">
+    <div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Boralá <span>Tche</span></div>
+  </header>
+
+  <div class="layout-descobrir">
+    <section class="busca-shell">
+      <div class="campo-busca-wrap">
+        <input type="text" id="campoBusca" placeholder="Buscar corte, unha, massagem...">
+      </div>
+
+      <div class="toggle-modo">
+        <button id="btnModoBusca" class="ativo">🔎 Buscar</button>
+        <button id="btnModoSwipe">🧉 Descobrir</button>
+      </div>
+
+      <div class="filtros-toolbar">
+        <button type="button" class="btn-filtros" id="btnToggleFiltros" aria-expanded="false">⚙ Filtros</button>
+      </div>
+
+      <div class="filtros-linha" id="painelFiltros">
+        <select id="filtroCategoria"></select>
+        <select id="filtroTipo"></select>
+        <input type="number" id="filtroPrecoMin" placeholder="Preço mín.">
+        <input type="number" id="filtroPrecoMax" placeholder="Preço máx.">
+        <select id="filtroOrdenar">
+          <option value="relevancia">Mais relevantes</option>
+          <option value="distancia">Mais perto</option>
+          <option value="nota">Melhor avaliados</option>
+          <option value="preco_asc">Menor preço</option>
+          <option value="preco_desc">Maior preço</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- MODO 1: BARRA DE BUSCA -->
+    <section id="painelBusca">
+      <div id="resultadosBusca"></div>
+      <p id="semResultados">Nenhum serviço encontrado com esses filtros. Tenta ajustar a busca, tchê!</p>
+      <button id="btnCarregarMaisBusca" class="btn-carregar-mais hidden">Carregar mais</button>
+    </section>
+
+    <!-- MODO 2: SWIPE -->
+    <section id="painelSwipe" class="hidden">
+      <div class="swipe-stack-wrap">
+        <div id="swipeDeck"></div>
+        <div id="swipeVazio" class="hidden">
+          <p>Acabaram os perfis por aqui.<br>Ajusta seus interesses na busca e volta já!</p>
+          <button id="btnCarregarMaisSwipe" class="btn-carregar-mais">Carregar mais perfis</button>
+        </div>
+      </div>
+
+      <div class="acoes-swipe">
+        <button id="btnSwipeSkip" class="skip" aria-label="Passar">✕</button>
+        <button id="btnSwipeLike" class="like" aria-label="Curtir">❤</button>
+      </div>
+    </section>
+  </div>
+
+<div id="app-nav"></div>
+
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/busca.js"></script>
+</body>
+</html>

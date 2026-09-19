@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agendar | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .resumo-servico { background: var(--cuia); color: var(--grafite); margin: 16px 20px; padding: 16px; border-radius: var(--raio); }
+  .resumo-servico h3 { margin-bottom: 4px; }
+  .resumo-servico p { font-family: var(--fonte-dado); font-size: .85rem; color: var(--cinza-texto); margin: 2px 0; }
+
+  .cal-header { display:flex; justify-content:space-between; align-items:center; padding: 8px 20px; }
+  .cal-header button { background:none; color:var(--cuia); font-size:1.2rem; }
+  #gridDiasAgendar { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; padding:0 20px; text-align:center; }
+  #gridDiasAgendar div { padding:10px 0; border-radius:8px; background:var(--verde-mate-2); color: var(--cinza-texto); }
+  .dia-livre { background: var(--verde-mate-2) !important; color: var(--cuia) !important; outline: 2px solid var(--dourado-mate); cursor:pointer; }
+  .dia-selecionado { outline: 3px solid var(--coral-quero) !important; }
+  .dia-vazio-mes { visibility:hidden; }
+
+  #listaHorariosAgendar { display:grid; grid-template-columns:repeat(auto-fill,minmax(70px,1fr)); gap:8px; padding:16px 20px 20px; }
+  .horario-livre { background:var(--cuia); color:var(--grafite); text-align:center; padding:9px 0; border-radius:8px; font-family:var(--fonte-dado); font-size:.85rem; cursor:pointer; }
+  .horario-livre.selecionado { background: var(--coral-quero); color:white; }
+
+  #resumoConfirmacao { margin: 0 20px 100px; }
+  #btnConfirmarAgendamento { width: calc(100% - 40px); margin: 0 20px 100px; padding:14px; border-radius: var(--raio-pequeno); background: var(--coral-quero); color:white; font-weight:600; display:none; }
+  #mensagemAgendar { text-align:center; padding: 30px 20px; color: var(--cuia-suave); }
+</style>
+</head>
+<body>
+  <header class="topo"><div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Agendar</div></header>
+
+  <div class="resumo-servico" id="resumoServico"></div>
+
+  <div id="areaCalendario" style="display:none">
+    <div class="cal-header">
+      <button id="prevMesAgendar">←</button>
+      <h3 id="mesAnoAgendar"></h3>
+      <button id="nextMesAgendar">→</button>
+    </div>
+
+    <div id="gridDiasAgendar"></div>
+
+    <h3 style="padding:16px 20px 0" id="dataSelecionadaAgendar"></h3>
+    <div id="listaHorariosAgendar"></div>
+
+    <button id="btnConfirmarAgendamento">Confirmar agendamento</button>
+  </div>
+
+  <p id="mensagemAgendar" style="display:none"></p>
+
+   <div id="app-nav"></div>
+
+  <script type="module" src="../js/nav.js"></script>
+
+  <script type="module" src="../js/agendar.js"></script>
+</body>
+</html>

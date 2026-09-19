@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meus Serviços | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* .secao e seus inputs/botões já são estilizados pelo style.css global
+     (tema escuro). Aqui só ficam as regras exclusivas desta página, para
+     não sobrescrever o .secao do arquivo externo. */
+  .dia-linha { display:flex; align-items:center; gap:8px; margin: 6px 0; flex-wrap: wrap; }
+  .linha-servico { display:flex; justify-content:space-between; align-items:center; padding: 8px 0; border-bottom: 1px solid var(--linha); }
+  #linkDados { display:block; text-align:center; margin: 4px 20px 0; color: var(--coral-quero); font-weight: 600; }
+</style>
+</head>
+<body>
+  <header class="topo"><div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Meus Serviços</div></header>
+
+  <a id="linkDados" href="editar-perfil.html">✏️ Editar meus dados pessoais (foto, endereço...)</a>
+
+  <section class="secao">
+    <h2>🗓️ Horários de atendimento</h2>
+    <form id="formAgenda">
+      <div id="diasSemana"></div>
+      <button type="submit">Salvar agenda</button>
+    </form>
+  </section>
+
+  <section class="secao">
+    <h2>🧾 Adicionar serviço ao catálogo</h2>
+    <form id="formServico">
+      <select id="servicoCategoria" required></select>
+      <select id="servicoTipo" required></select>
+      <select id="servicoProduto" required></select>
+      <input type="number" id="servicoPreco" placeholder="Preço (R$)" step="0.01" required>
+      <input type="number" id="servicoDuracao" placeholder="Duração (min)" required>
+      <input type="number" id="servicoSinal" placeholder="Sinal (%)" value="0" min="0" max="100">
+      <textarea id="servicoDescricao" placeholder="Descrição (opcional)"></textarea>
+      <input type="file" id="servicoImagens" accept="image/*" multiple>
+      <button type="submit">Adicionar serviço</button>
+    </form>
+
+    <h3 style="margin-top:20px">Meus serviços</h3>
+    <div id="listaServicosCadastrados"></div>
+  </section>
+
+  <div style="text-align:center;padding:20px 0 100px">
+    <a href="descobrir.html" style="color:var(--coral-quero);font-weight:600">Ir para o app →</a>
+  </div>
+<div id="app-nav"></div>
+  <script type="module">
+    // gera os 7 blocos de dia da semana dinamicamente
+    const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+    const container = document.getElementById("diasSemana");
+    dias.forEach((nome, i) => {
+      container.insertAdjacentHTML("beforeend", `
+        <div class="dia-linha">
+          <label><input type="checkbox" id="dia-${i}-ativo"> ${nome}</label>
+          <input type="time" id="dia-${i}-inicio" style="width:auto">
+          <span>até</span>
+          <input type="time" id="dia-${i}-fim" style="width:auto">
+        </div>
+      `);
+    });
+  </script>
+  <script type="module" src="../js/cadastro-servicos.js"></script>
+</body>
+</html>

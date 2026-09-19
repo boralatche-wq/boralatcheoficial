@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Perfil | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .secao { background: rgba(155, 44, 255, 0.15); color: var(--cuia-suave); margin: 16px 20px; padding: 20px; border-radius: var(--raio); }
+  .secao h2 { font-size: 1.1rem; }
+  .secao input, .secao select, .secao textarea { width: 100%; padding: 10px; margin: 6px 0; border-radius: var(--raio-pequeno); border: 1px solid var(--linha); font-family: var(--fonte-corpo); }
+  .secao button { padding: 11px 16px; border-radius: var(--raio-pequeno); background: var(--coral-quero); color: white; font-weight: 600; margin-top: 8px; }
+  #avatar { width:90px; height:90px; border-radius:50%; object-fit:cover; display:block; margin-bottom:10px; }
+  #linkServicos { display:block; text-align:center; margin: 4px 20px 16px; color: var(--coral-quero); font-weight: 600; }
+</style>
+</head>
+<body>
+  <header class="topo"><div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Editar Perfil</div></header>
+
+  <section class="secao">
+    <h2>📷 Foto de perfil</h2>
+    <img id="avatar" src="../img/avatar.png">
+    <input type="file" id="fileInput" accept="image/*">
+    <button id="uploadBtn">Salvar foto</button>
+  </section>
+
+  <section class="secao">
+    <h2>👤 Meus dados</h2>
+    <form id="formDados">
+      <input type="text" id="nome" placeholder="Nome completo" required>
+      <input type="text" id="telefone" placeholder="Telefone (com DDD)" required>
+      <textarea id="bio" placeholder="Uma frase sobre você (opcional)" rows="2"></textarea>
+
+      <input type="text" id="cep" placeholder="CEP">
+      <input type="text" id="cidade" placeholder="Cidade" required>
+      <input type="text" id="estado" placeholder="Estado (UF)" required>
+      <input type="text" id="bairro" placeholder="Bairro">
+      <input type="hidden" id="logradouro">
+      <input type="hidden" id="latitude">
+      <input type="hidden" id="longitude">
+      <p id="statusGeocodificacao" style="font-size:.8rem;color:var(--cinza-texto)">
+        Preencha o CEP e o endereço é completado automaticamente.
+      </p>
+
+      <button type="submit">Salvar dados</button>
+    </form>
+  </section>
+
+  <section class="secao">
+    <h2>🔒 Trocar senha</h2>
+    <form id="formSenha">
+      <input type="password" id="senhaNova" placeholder="Senha nova (mínimo 6 caracteres)" required>
+      <input type="password" id="senhaConfirmar" placeholder="Confirme a senha nova" required>
+      <div id="mensagemErroSenha" style="color:var(--erro);font-size:.85rem;min-height:1.2em"></div>
+      <button type="submit">Trocar senha</button>
+    </form>
+  </section>
+
+  <a id="linkServicos" href="cadastro-servicos.html" style="display:none">
+    🧾 Configurar meus serviços e horários →
+  </a>
+
+<div id="app-nav"></div>
+  <script type="module" src="../js/editar-perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Completar Cadastro | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="auth-shell">
+    <h1 class="marca" style="text-align:center;margin-bottom:8px"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Quase lá!</h1>
+    <p style="text-align:center;color:var(--cuia-suave);margin-bottom:24px">
+      Conta um pouco sobre você pra gente montar seu perfil.
+    </p>
+
+    <form onsubmit="event.preventDefault(); completarCadastro();">
+      <input type="text" id="nome" placeholder="Nome completo" required>
+
+      <div style="color:var(--grafite)">
+        <label style="display:block;margin-bottom:8px;font-weight:600">Você é...</label>
+        <div style="display:flex; gap:10px">
+          <label><input type="radio" name="tipo_usuario" value="cliente" checked> Cliente</label>
+          <label><input type="radio" name="tipo_usuario" value="prestador"> Prestador de serviço</label>
+        </div>
+      </div>
+
+      <div id="mensagem-erro"></div>
+      <button type="submit">Continuar</button>
+    </form>
+  </div>
+<div id="app-nav"></div>
+  <script type="module" src="../js/completar-cadastro.js"></script>
+</body>
+</html>

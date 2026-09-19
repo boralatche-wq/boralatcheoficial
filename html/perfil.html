@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Perfil | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="perfil-header">
+    <img id="fotoPerfil" src="../img/avatar.png" alt="Foto de perfil">
+    <h2 id="nomeUsuario"></h2>
+    <p id="tipoUsuario" class="perfil-meta"></p>
+    <p id="enderecoUsuario" class="perfil-meta"></p>
+    <p id="notaUsuario" class="perfil-nota"></p>
+    <div class="perfil-links">
+      <a href="editar-perfil.html" class="link-accent">✏️ Editar meus dados</a>
+      <a id="linkMeusServicos" href="cadastro-servicos.html" class="link-accent hidden">🧾 Meus serviços</a>
+    </div>
+    <div>
+      <button id="btnTrocarTipo"></button>
+    </div>
+  </div>
+
+  <div id="agendaResumo"></div>
+
+  <h3 class="titulo-secao-pagina">Meus serviços</h3>
+  <section id="gridProdutos" class="matches-grid"></section>
+
+  <div id="app-nav"></div>
+
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/perfil.js"></script>
+</body>
+</html>

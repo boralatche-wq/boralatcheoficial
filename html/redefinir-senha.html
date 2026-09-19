@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Senha | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="auth-shell">
+    <h1 class="marca" style="text-align:center;margin-bottom:8px"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Criar nova senha</h1>
+
+    <div id="areaFormulario" style="display:none">
+      <form onsubmit="event.preventDefault(); salvarNovaSenha();">
+        <input type="password" id="novaSenha" placeholder="Senha nova (mínimo 6 caracteres)" required>
+        <input type="password" id="confirmarSenha" placeholder="Confirme a senha nova" required>
+        <div id="mensagem-erro"></div>
+        <button type="submit" id="btnSalvar">Salvar nova senha</button>
+      </form>
+    </div>
+
+    <p id="mensagemLink" style="text-align:center;color:var(--cuia-suave)">Verificando o link...</p>
+  
+  <div id="app-nav"></div>
+  </div>
+
+  <script type="module" src="../js/redefinir-senha.js"></script>
+</body>
+</html>

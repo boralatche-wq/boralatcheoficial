@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="auth-shell">
+    <h1 class="marca" style="text-align:center;margin-bottom:24px"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Boralá <span>Tche</span></h1>
+    <form onsubmit="event.preventDefault(); login();">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="senha" placeholder="Senha" required>
+      <div id="mensagem-erro"></div>
+      <button type="submit">Entrar</button>
+    </form>
+    <p style="text-align:center;margin-top:16px;color:var(--cuia-suave)">
+      Não tem conta? <a href="cadastro.html" style="color:var(--coral-quero)">Criar conta</a>
+      &nbsp;•&nbsp;
+      <a href="esqueci-senha.html" style="color:var(--coral-quero)">Esqueci a senha</a>
+    </p>
+
+  </div>
+
+  <script type="module" src="../js/auth.js"></script>
+</body>
+</html>

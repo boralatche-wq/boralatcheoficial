@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Troca de Serviço | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .barra-oferta { background: var(--cuia); color: var(--grafite); margin: 16px 20px; padding: 14px 16px; border-radius: var(--raio); }
+  .barra-oferta label { font-size: .85rem; font-weight: 600; display:block; margin-bottom:6px; }
+  .barra-oferta select { width:100%; padding:10px; border-radius: var(--raio-pequeno); border:1px solid var(--linha); }
+
+  .interesses-shell { background: var(--cuia); color: var(--grafite); margin: 16px 20px; padding: 16px; border-radius: var(--raio); }
+  .interesses-shell select { width:100%; padding:9px; margin:4px 0; border-radius: var(--raio-pequeno); border:1px solid var(--linha); }
+  .interesses-shell button { margin-top:8px; padding:10px 14px; border-radius: var(--raio-pequeno); background: var(--coral-quero); color:white; font-weight:600; }
+
+  .chip-lista { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .chip { background: var(--verde-mate-2); color: var(--cuia-suave); padding:6px 10px; border-radius:999px; font-size:.85rem; }
+  .chip-removivel button { background:none; color:var(--coral-quero); margin-left:4px; font-weight:700; }
+  .dica { color: var(--cinza-texto); font-size:.85rem; }
+</style>
+</head>
+<body>
+  <header class="topo">
+    <div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Troca de Serviço</div>
+    <p style="color:var(--cuia-suave);font-size:.85rem">Troque seu atendimento com outro profissional, sem dinheiro envolvido.</p>
+  </header>
+
+  <div class="toggle-modo" style="margin-left:20px">
+    <button id="btnAbaSwipeTroca" class="ativo">🔄 Descobrir trocas</button>
+    <button id="btnAbaInteresses">🎯 O que eu quero</button>
+  </div>
+
+  <section id="abaSwipeTroca">
+    <div class="barra-oferta">
+      <label>O que você está oferecendo nesta troca?</label>
+      <select id="seletorMeuServico"></select>
+    </div>
+
+    <div class="swipe-stack-wrap">
+      <div id="swipeDeckTroca"></div>
+      <div id="swipeVazioTroca" style="display:none">
+        <p>Sem candidatos por agora.<br>Marque mais interesses na aba "O que eu quero" pra aparecer mais gente.</p>
+        <button id="btnCarregarMaisTroca" class="btn-carregar-mais">Carregar mais</button>
+      </div>
+    </div>
+
+    <div class="acoes-swipe">
+      <button id="btnTrocaSkip" class="skip">✕</button>
+      <button id="btnTrocaLike" class="like">❤</button>
+    </div>
+  </section>
+
+  <section id="abaInteresses" style="display:none">
+    <div class="interesses-shell">
+      <h3>O que você quer receber em troca</h3>
+      <select id="interesseCategoria"><option value="">Categoria</option></select>
+      <select id="interesseTipo"><option value="">Tipo</option></select>
+      <select id="interesseProduto"><option value="">Produto/serviço</option></select>
+      <button id="btnAdicionarInteresse">+ Adicionar interesse</button>
+
+      <div class="chip-lista" id="listaInteresses"></div>
+    </div>
+  </section>
+
+  <div id="app-nav"></div>
+
+  <script type="module" src="../js/nav.js"></script>
+
+  <script type="module" src="../js/troca.js"></script>
+</body>
+</html>

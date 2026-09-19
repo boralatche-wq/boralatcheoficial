@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitar novo serviço | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --erro: #c0392b;
+    --sucesso: #2e7d4f;
+    --aviso: #b7791f;
+    --info: #2b6cb0;
+    --cinza-texto: #6b6b6b;
+  }
+
+  .secao {
+    background: var(--cuia);
+    color: var(--grafite);
+    margin: 16px 20px;
+    padding: 22px;
+    border-radius: var(--raio);
+  }
+  .secao h2 { font-size: 1.15rem; margin: 0 0 4px; }
+  .secao .subtitulo { font-size: 0.88rem; color: var(--cinza-texto); margin: 0 0 18px; }
+
+  /* --- Escolha do tipo de pedido (cards de rádio) --- */
+  .opcoes-tipo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  @media (min-width: 520px) {
+    .opcoes-tipo { grid-template-columns: repeat(4, 1fr); }
+  }
+  .opcao-tipo {
+    position: relative;
+    border: 1.5px solid var(--linha);
+    border-radius: var(--raio-pequeno);
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .opcao-tipo:hover { border-color: var(--coral-quero); }
+  .opcao-tipo input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+  }
+  .opcao-tipo .icone { font-size: 1.4rem; display: block; margin-bottom: 6px; }
+  .opcao-tipo .rotulo { font-weight: 600; font-size: 0.86rem; display: block; }
+  .opcao-tipo .descricao-curta { font-size: 0.74rem; color: var(--cinza-texto); display: block; margin-top: 2px; }
+  .opcao-tipo:has(input:checked) {
+    border-color: var(--coral-quero);
+    background: color-mix(in srgb, var(--coral-quero) 8%, transparent);
+    transform: translateY(-1px);
+  }
+  .opcao-tipo:has(input:checked) .rotulo { color: var(--coral-quero); }
+
+  /* --- Campos condicionais --- */
+  .campo-condicional {
+    display: none;
+    overflow: hidden;
+    animation: abrirCampo .18s ease;
+  }
+  .campo-condicional.ativo { display: block; }
+  @keyframes abrirCampo {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .campo { margin-bottom: 14px; }
+  .campo label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--grafite);
+  }
+  .campo .dica {
+    font-weight: 400;
+    color: var(--cinza-texto);
+    font-size: 0.76rem;
+  }
+  .secao input[type="text"],
+  .secao select,
+  .secao textarea {
+    width: 100%;
+    padding: 11px;
+    border-radius: var(--raio-pequeno);
+    border: 1px solid var(--linha);
+    font-family: var(--fonte-corpo);
+    background: #fff;
+    box-sizing: border-box;
+  }
+  .secao textarea { resize: vertical; min-height: 70px; }
+
+  .grupo-encadeado {
+    border-left: 2px solid var(--linha);
+    padding-left: 12px;
+    margin-left: 2px;
+  }
+
+  .secao button[type="submit"] {
+    width: 100%;
+    padding: 13px 16px;
+    border: none;
+    border-radius: var(--raio-pequeno);
+    background: var(--coral-quero);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: filter .15s ease;
+  }
+  .secao button[type="submit"]:hover { filter: brightness(0.94); }
+
+  /* --- Lista de solicitações --- */
+  #listaSolicitacoes { display: flex; flex-direction: column; gap: 12px; }
+
+  .solicitacao-item {
+    background: #fff;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-pequeno);
+    padding: 14px 16px;
+    position: relative;
+  }
+  .solicitacao-item h4 {
+    margin: 8px 0 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--grafite);
+    padding-right: 90px;
+  }
+  .solicitacao-item p {
+    margin: 4px 0;
+    font-size: 0.85rem;
+    color: var(--cinza-texto);
+  }
+  .solicitacao-item .resposta {
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: var(--raio-pequeno);
+    font-size: 0.84rem;
+    background: #f4f4f2;
+    border-left: 3px solid var(--linha);
+  }
+
+  .status-badge {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .status-pendente { background: color-mix(in srgb, var(--aviso) 15%, #fff); color: var(--aviso); }
+  .status-aceito   { background: color-mix(in srgb, var(--sucesso) 15%, #fff); color: var(--sucesso); }
+  .status-recusado { background: color-mix(in srgb, var(--erro) 12%, #fff); color: var(--erro); }
+  .status-sugestao { background: color-mix(in srgb, var(--info) 14%, #fff); color: var(--info); }
+
+  .status-recusado ~ h4, .solicitacao-item:has(.status-recusado) .resposta {
+    border-left-color: var(--erro);
+  }
+  .solicitacao-item:has(.status-sugestao) .resposta { border-left-color: var(--info); }
+  .solicitacao-item:has(.status-aceito) .resposta { border-left-color: var(--sucesso); }
+
+  .btn-cancelar-pedido {
+    margin-top: 10px;
+    background: none;
+    border: 1px solid var(--linha);
+    color: var(--cinza-texto);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: var(--raio-pequeno);
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .btn-cancelar-pedido:hover { border-color: var(--erro); color: var(--erro); }
+
+  #listaSolicitacoes p { color: var(--cinza-texto); font-size: 0.88rem; }
+
+  /* --- Busca no catálogo existente --- */
+  .busca-caixa { position: relative; margin-bottom: 4px; }
+  .busca-input-wrap { position: relative; }
+  .busca-input-wrap::before {
+    content: "🔍";
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+  .busca-caixa input[type="text"] { padding-left: 36px !important; }
+
+  .busca-resultados {
+    display: none;
+    margin-top: 10px;
+    max-height: 320px;
+    overflow-y: auto;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-pequeno);
+    background: #fff;
+  }
+  .busca-resultados.ativo { display: block; }
+
+  .busca-grupo-titulo {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-weight: 700;
+    color: var(--cinza-texto);
+    padding: 10px 14px 4px;
+    margin: 0;
+  }
+  .busca-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    border: none;
+    background: none;
+    font-family: var(--fonte-corpo);
+    cursor: default;
+    border-bottom: 1px solid #f0f0ee;
+  }
+  .busca-item:last-child { border-bottom: none; }
+  .busca-item-icone { font-size: 1.15rem; }
+  .busca-item-texto { display: flex; flex-direction: column; }
+  .busca-item-texto strong { font-size: 0.86rem; color: var(--grafite); }
+  .busca-item-texto small { font-size: 0.74rem; color: var(--cinza-texto); }
+
+  .busca-carregando, .busca-erro { padding: 12px 14px; font-size: 0.84rem; color: var(--cinza-texto); margin: 0; }
+  .busca-vazia { display: flex; align-items: center; gap: 10px; padding: 14px; }
+  .busca-vazia span { font-size: 1.2rem; }
+  .busca-vazia p { margin: 0; font-size: 0.84rem; color: var(--cinza-texto); }
+
+  .divisor-ou {
+    text-align: center;
+    font-size: 0.76rem;
+    color: var(--cinza-texto);
+    margin: 18px 0 14px;
+    position: relative;
+  }
+  .divisor-ou::before, .divisor-ou::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: var(--linha);
+  }
+  .divisor-ou::before { left: 0; }
+  .divisor-ou::after { right: 0; }
+</style>
+</head>
+<body>
+  <header class="topo">
+    <div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Solicitar novo serviço</div>
+  </header>
+
+  <section class="secao">
+    <h2>🔎 Antes de pedir, dá uma olhada</h2>
+    <p class="subtitulo">
+      Busque pelo nome do serviço — se ele já existir no catálogo, você economiza tempo e cadastra direto
+      em "Meus Serviços", sem precisar esperar aprovação.
+    </p>
+    <div class="busca-caixa">
+      <div class="busca-input-wrap">
+        <input type="text" id="buscaCatalogo" placeholder="Ex.: escova, design de sobrancelha, massagem...">
+      </div>
+      <div id="resultadosBuscaCatalogo" class="busca-resultados"></div>
+    </div>
+  </section>
+
+  <div class="divisor-ou">não achei, quero solicitar ↓</div>
+
+  <section class="secao">
+    <h2>📋 Pedir inclusão no catálogo</h2>
+    <p class="subtitulo">
+      Não achou o que você oferece? Peça aqui pra gente incluir —
+      o time do Boralá Tche analisa e te avisa por aqui mesmo.
+    </p>
+
+    <form id="formSolicitacao">
+      <div class="opcoes-tipo">
+        <label class="opcao-tipo">
+          <input type="radio" name="tipoSolicitacao" value="categoria">
+          <span class="icone">📁</span>
+          <span class="rotulo">Categoria nova</span>
+          <span class="descricao-curta">Nem a categoria existe (ex.: Marcenaria)</span>
+        </label>
+
+        <label class="opcao-tipo">
+          <input type="radio" name="tipoSolicitacao" value="tipo_servico">
+          <span class="icone">🗂️</span>
+          <span class="rotulo">Tipo de serviço</span>
+          <span class="descricao-curta">Categoria existe, o tipo não</span>
+        </label>
+
+        <label class="opcao-tipo">
+          <input type="radio" name="tipoSolicitacao" value="produto" checked>
+          <span class="icone">🧾</span>
+          <span class="rotulo">Produto/serviço</span>
+          <span class="descricao-curta">O tipo já existe, falta o item</span>
+        </label>
+
+        <label class="opcao-tipo">
+          <input type="radio" name="tipoSolicitacao" value="ambos">
+          <span class="icone">✨</span>
+          <span class="rotulo">Os dois</span>
+          <span class="descricao-curta">Categoria existe, tipo e item não</span>
+        </label>
+      </div>
+
+      <!-- Categoria nova (categoria) -->
+      <div id="blocoCategoriaNova" class="campo campo-condicional">
+        <label for="nomeCategoriaSugerida">Nome da categoria nova</label>
+        <input type="text" id="nomeCategoriaSugerida" placeholder="Ex.: Marcenaria">
+      </div>
+      <div id="blocoIconeCategoria" class="campo campo-condicional">
+        <label for="iconeCategoriaSugerido">Emoji pra representar a categoria <span class="dica">(opcional)</span></label>
+        <input type="text" id="iconeCategoriaSugerido" placeholder="Ex.: 🪚" maxlength="4">
+      </div>
+
+      <!-- Tipo de serviço novo (tipo_servico / ambos) -->
+      <div id="blocoCategoria" class="campo campo-condicional">
+        <label for="selectCategoria">Categoria onde esse tipo se encaixa</label>
+        <select id="selectCategoria">
+          <option value="">Categoria</option>
+        </select>
+      </div>
+
+      <div id="blocoNomeTipo" class="campo campo-condicional">
+        <label for="nomeTipoServico">Nome do tipo de serviço novo</label>
+        <input type="text" id="nomeTipoServico" placeholder="Ex.: Estética automotiva">
+      </div>
+
+      <!-- Produto/serviço novo dentro de um tipo existente (produto) -->
+      <div id="blocoTipoExistente" class="campo-condicional">
+        <div class="campo">
+          <label for="selectCategoriaParaTipo">Categoria</label>
+          <select id="selectCategoriaParaTipo">
+            <option value="">Categoria</option>
+          </select>
+        </div>
+        <div class="campo grupo-encadeado">
+          <label for="selectTipoExistente">Tipo de serviço já existente</label>
+          <select id="selectTipoExistente">
+            <option value="">Tipo de serviço existente</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="blocoNomeProduto" class="campo campo-condicional">
+        <label for="nomeProduto">Nome do produto/serviço <span class="dica">(o item específico)</span></label>
+        <input type="text" id="nomeProduto" placeholder="Ex.: Higienização de estofados">
+      </div>
+
+      <div class="campo">
+        <label for="descricaoPedido">Descrição <span class="dica">(opcional — ajuda o admin a entender o pedido)</span></label>
+        <textarea id="descricaoPedido" placeholder="Conte um pouco sobre o serviço que você quer oferecer..."></textarea>
+      </div>
+
+      <button type="submit">Enviar solicitação</button>
+    </form>
+  </section>
+
+  <section class="secao">
+    <h2>📨 Minhas solicitações</h2>
+    <p class="subtitulo">Acompanhe o status dos pedidos que você já fez.</p>
+    <div id="listaSolicitacoes">
+      <p>Carregando...</p>
+    </div>
+  </section>
+
+  <div style="text-align:center;padding:20px 0 100px">
+    <a href="cadastro-servicos.html" style="color:var(--coral-quero);font-weight:600">← Voltar para Meus Serviços</a>
+  </div>
+  <div id="app-nav"></div>
+
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/solicitar-servico.js"></script>
+  <!-- este arquivo importa "./busca-catalogo.js" — garanta que ele também está em ../js/ -->
+
+</body>
+</html>

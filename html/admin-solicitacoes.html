@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitações de catálogo | Admin Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --erro: #c0392b;
+    --sucesso: #2e7d4f;
+    --aviso: #b7791f;
+    --info: #2b6cb0;
+    --cinza-texto: #6b6b6b;
+  }
+
+  body { background: #f6f5f2; padding-bottom: 60px; }
+
+  .topo-admin {
+    background: var(--grafite);
+    color: #fff;
+    padding: 18px 20px;
+  }
+  .topo-admin .marca { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
+  .topo-admin .logo-icone { height: 26px; }
+  .topo-admin p { margin: 4px 0 0; font-size: 0.8rem; color: #cfcfcf; }
+
+  .abas-admin {
+    display: flex;
+    gap: 4px;
+    margin: 18px 20px 0;
+    border-bottom: 1.5px solid var(--linha);
+  }
+  .aba-admin {
+    padding: 10px 16px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--cinza-texto);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .aba-admin.ativa { color: var(--coral-quero); border-bottom-color: var(--coral-quero); }
+  .aba-admin .pill {
+    background: var(--coral-quero);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+
+  .painel-admin { display: none; padding: 18px 20px; }
+  .painel-admin.ativo { display: block; }
+
+  /* --- Busca rápida no topo do painel --- */
+  .busca-admin-caixa {
+    background: var(--cuia);
+    border-radius: var(--raio);
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+  .busca-admin-caixa h3 { margin: 0 0 3px; font-size: 0.95rem; color: var(--grafite); }
+  .busca-admin-caixa p { margin: 0 0 10px; font-size: 0.78rem; color: var(--cinza-texto); }
+  .busca-admin-caixa input[type="text"] {
+    width: 100%;
+    padding: 11px 14px 11px 36px;
+    border-radius: var(--raio-pequeno);
+    border: 1px solid var(--linha);
+    font-family: var(--fonte-corpo);
+    box-sizing: border-box;
+  }
+  .busca-admin-input-wrap { position: relative; }
+  .busca-admin-input-wrap::before {
+    content: "🔍"; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 0.9rem;
+  }
+
+  /* --- Cards de pendentes --- */
+  .card-solicitacao {
+    background: #fff;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .card-topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .tag-tipo {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+  .tag-categoria { background: color-mix(in srgb, #b7791f 14%, #fff); color: #b7791f; }
+  .tag-tipo_servico { background: color-mix(in srgb, var(--info) 14%, #fff); color: var(--info); }
+  .tag-produto { background: color-mix(in srgb, var(--coral-quero) 14%, #fff); color: var(--coral-quero); }
+  .tag-ambos { background: color-mix(in srgb, #7c3aed 14%, #fff); color: #7c3aed; }
+  .card-data { font-size: 0.76rem; color: var(--cinza-texto); }
+
+  .card-solicitacao h3 { margin: 0 0 6px; font-size: 1rem; color: var(--grafite); font-weight: 600; line-height: 1.4; }
+  .card-solicitante { font-size: 0.82rem; color: var(--cinza-texto); margin: 0 0 6px; }
+  .card-descricao {
+    font-size: 0.85rem;
+    color: var(--grafite);
+    background: #f6f5f2;
+    padding: 10px 12px;
+    border-radius: var(--raio-pequeno);
+    margin: 8px 0;
+    font-style: italic;
+  }
+
+  .card-acoes { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .card-acoes button {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 12px;
+    border-radius: var(--raio-pequeno);
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+  }
+  .btn-aprovar { background: var(--sucesso); color: #fff; }
+  .btn-aprovar:hover { filter: brightness(0.95); }
+  .btn-recusar { background: #fff; color: var(--erro); border-color: var(--erro); }
+  .btn-recusar:hover { background: color-mix(in srgb, var(--erro) 8%, #fff); }
+  .btn-sugerir { background: #fff; color: var(--info); border-color: var(--info); }
+  .btn-sugerir:hover { background: color-mix(in srgb, var(--info) 8%, #fff); }
+
+  .painel-recusa, .painel-sugestao {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: var(--raio-pequeno);
+    background: #f6f5f2;
+    border: 1px dashed var(--linha);
+  }
+  .painel-recusa.oculto, .painel-sugestao.oculto { display: none; }
+  .painel-recusa label, .painel-sugestao label {
+    display: block; font-size: 0.8rem; font-weight: 600; color: var(--grafite); margin-bottom: 6px;
+  }
+  .painel-recusa textarea, .painel-sugestao textarea, .painel-sugestao input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--raio-pequeno);
+    border: 1px solid var(--linha);
+    font-family: var(--fonte-corpo);
+    box-sizing: border-box;
+    margin-bottom: 8px;
+  }
+  .painel-recusa textarea { min-height: 70px; resize: vertical; }
+
+  .painel-acoes { display: flex; gap: 8px; margin-top: 6px; }
+  .painel-acoes button {
+    padding: 9px 14px;
+    border-radius: var(--raio-pequeno);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-confirmar-recusa { background: var(--erro); color: #fff; }
+  .btn-confirmar-sugestao { background: var(--info); color: #fff; }
+  .btn-confirmar-sugestao:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-cancelar-painel { background: none; color: var(--cinza-texto); border: 1px solid var(--linha) !important; }
+
+  .sugestao-selecionada { font-size: 0.8rem; color: var(--info); font-weight: 600; min-height: 1em; margin: 4px 0; }
+
+  /* resultados de busca dentro dos painéis (reaproveita .busca-item do módulo) */
+  .resultados-busca-sugestao {
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio-pequeno);
+    background: #fff;
+    margin-bottom: 8px;
+    display: none;
+  }
+  .resultados-busca-sugestao.ativo { display: block; }
+  .busca-item {
+    display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+    padding: 9px 12px; border: none; background: none; font-family: var(--fonte-corpo);
+    cursor: pointer; border-bottom: 1px solid #f0f0ee;
+  }
+  .busca-item:hover { background: #f6f5f2; }
+  .busca-item.selecionado { background: color-mix(in srgb, var(--info) 10%, #fff); }
+  .busca-item:last-child { border-bottom: none; }
+  .busca-item-icone { font-size: 1.1rem; }
+  .busca-item-texto { display: flex; flex-direction: column; }
+  .busca-item-texto strong { font-size: 0.84rem; color: var(--grafite); }
+  .busca-item-texto small { font-size: 0.72rem; color: var(--cinza-texto); }
+  .busca-grupo-titulo {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: .04em; font-weight: 700;
+    color: var(--cinza-texto); padding: 8px 12px 4px; margin: 0;
+  }
+  .busca-carregando, .busca-erro { padding: 10px 12px; font-size: 0.82rem; color: var(--cinza-texto); margin: 0; }
+  .busca-vazia { display: flex; align-items: center; gap: 8px; padding: 12px; }
+  .busca-vazia p { margin: 0; font-size: 0.8rem; color: var(--cinza-texto); }
+
+  .vazio-admin, .carregando, .erro-carregar, .vazio-historico {
+    text-align: center; padding: 40px 20px; color: var(--cinza-texto); font-size: 0.9rem;
+  }
+  .vazio-admin span { font-size: 2rem; display: block; margin-bottom: 8px; }
+
+  /* --- Histórico --- */
+  .item-historico {
+    background: #fff; border: 1px solid var(--linha); border-radius: var(--raio-pequeno);
+    padding: 14px 16px; margin-bottom: 10px; position: relative;
+  }
+  .item-historico h4 { margin: 8px 0 4px; font-size: 0.92rem; font-weight: 600; color: var(--grafite); padding-right: 90px; }
+  .item-historico .resposta {
+    margin-top: 8px; padding: 9px 12px; border-radius: var(--raio-pequeno);
+    font-size: 0.82rem; background: #f6f5f2; border-left: 3px solid var(--linha);
+  }
+  .status-badge {
+    position: absolute; top: 14px; right: 16px; font-size: 0.7rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 999px; white-space: nowrap;
+  }
+  .status-pendente { background: color-mix(in srgb, var(--aviso) 15%, #fff); color: var(--aviso); }
+  .status-aceito   { background: color-mix(in srgb, var(--sucesso) 15%, #fff); color: var(--sucesso); }
+  .status-recusado { background: color-mix(in srgb, var(--erro) 12%, #fff); color: var(--erro); }
+  .status-sugestao { background: color-mix(in srgb, var(--info) 14%, #fff); color: var(--info); }
+</style>
+</head>
+<body>
+  <header class="topo-admin">
+    <div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Painel do administrador</div>
+    <p>Solicitações de catálogo enviadas pelos prestadores</p>
+  </header>
+
+  <nav class="abas-admin">
+    <button class="aba-admin ativa" data-aba="pendentes">⏳ Pendentes <span class="pill" id="contadorPendentes">0</span></button>
+    <button class="aba-admin" data-aba="historico">📜 Histórico</button>
+  </nav>
+
+  <section id="painelPendentes" class="painel-admin ativo">
+    <div class="busca-admin-caixa">
+      <h3>🔎 Checar duplicidade no catálogo</h3>
+      <p>Busque antes de decidir — se o serviço já existir, use "Sugerir existente" em vez de aprovar um novo.</p>
+      <div class="busca-admin-input-wrap">
+        <input type="text" id="buscaCatalogoAdmin" placeholder="Buscar por nome do produto ou tipo de serviço...">
+      </div>
+      <div id="resultadosBuscaAdmin" class="busca-resultados resultados-busca-sugestao"></div>
+    </div>
+
+    <div id="listaPendentes"><p class="carregando">Carregando...</p></div>
+  </section>
+
+  <section id="painelHistorico" class="painel-admin">
+    <div id="listaHistorico"><p class="carregando">Carregando...</p></div>
+  </section>
+<div id="app-nav"></div>
+  <script type="module" src="../js/admin-solicitacoes.js"></script>
+</body>
+</html>

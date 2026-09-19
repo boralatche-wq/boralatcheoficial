@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meus Matches | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Meus Matches</div>
+    <p id="saudacao" class="subtitulo-pagina"></p>
+  </header>
+
+  <div id="dashboardFinanceiro"></div>
+
+  <div class="secao-titulo hidden" id="tituloSolicitacoes">
+    📋 Solicitações pendentes <span class="contagem" id="contagemSolicitacoes">0</span>
+    <select class="ordenar" id="ordenarSolicitacoes">
+      <option value="recente">Mais recente</option>
+      <option value="preco_asc">Menor preço</option>
+      <option value="preco_desc">Maior preço</option>
+      <option value="duracao_asc">Menor duração</option>
+      <option value="duracao_desc">Maior duração</option>
+    </select>
+  </div>
+  <section id="listaSolicitacoes"></section>
+  <p class="secao-vazia hidden" id="semSolicitacoes">Nenhum pedido esperando sua resposta.</p>
+
+  <div class="secao-titulo">📅 Agendamentos confirmados <span class="contagem" id="contagemAgendados">0</span></div>
+  <section id="listaAgendados" class="matches-grid"></section>
+  <p class="secao-vazia hidden" id="semAgendados">Nenhum horário confirmado ainda.</p>
+
+  <div class="secao-titulo hidden" id="tituloAguardandoConfirmacao">
+    ⏳ Aguardando confirmação do prestador <span class="contagem" id="contagemAguardandoConfirmacao">0</span>
+  </div>
+  <section id="listaAguardandoConfirmacao" class="matches-grid"></section>
+  <p class="secao-vazia hidden" id="semAguardandoConfirmacao">Nenhum pedido aguardando resposta.</p>
+
+  <div class="secao-titulo">❤ Aguardando agendamento <span class="contagem" id="contagemAguardando">0</span></div>
+  <section id="listaAguardando" class="matches-grid"></section>
+  <p class="secao-vazia hidden" id="semAguardando">Nenhum match esperando agendamento.</p>
+
+  <div class="secao-titulo">🔄 Trocas de Serviço <span class="contagem" id="contagemTrocas">0</span></div>
+  <section id="listaTrocas" class="matches-grid"></section>
+  <p class="secao-vazia hidden" id="semTrocas">Nenhuma troca por aqui ainda.</p>
+
+  <p id="semMatches" class="hidden" style="text-align:center;padding:30px 20px;color:var(--cuia-suave)">
+    Você ainda não tem matches. Vai lá em <a href="descobrir.html" class="link-accent">Descobrir</a> e comece a curtir!
+  </p>
+
+  <div id="modalAvaliacao" class="hidden">
+    <div class="caixa">
+      <h3>Como foi o atendimento?</h3>
+      <div class="estrelas" id="estrelas">
+        <span data-nota="1">⭐</span><span data-nota="2">⭐</span><span data-nota="3">⭐</span><span data-nota="4">⭐</span><span data-nota="5">⭐</span>
+      </div>
+      <textarea id="comentarioAvaliacao" rows="3" placeholder="Comentário (opcional)"></textarea>
+      <div class="acoes-modal">
+        <button id="btnPularAvaliacao" type="button">Pular</button>
+        <button id="btnEnviarAvaliacao" type="button">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+<div id="app-nav"></div>
+  <script type="module" src="../js/nav.js"></script>
+  <script type="module" src="../js/matches.js"></script>
+</body>
+</html>

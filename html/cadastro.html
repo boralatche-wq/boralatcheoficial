@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criar Conta | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="auth-shell">
+    <h1 class="marca" style="text-align:center;margin-bottom:24px"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Criar conta</h1>
+    <form onsubmit="event.preventDefault(); cadastrar();">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="senha" placeholder="Senha (mínimo 6 caracteres)" required>
+      <div id="mensagem-erro"></div>
+      <button type="submit">Criar conta</button>
+    </form>
+    <p style="text-align:center;margin-top:16px;color:var(--cuia-suave)">
+      Já tem conta? <a href="index.html" style="color:var(--coral-quero)">Entrar</a>
+    </p>
+  </div>
+<div id="app-nav"></div>
+  <script type="module" src="../js/cadastro.js"></script>
+</body>
+</html>

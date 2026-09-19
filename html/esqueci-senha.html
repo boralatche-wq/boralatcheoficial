@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esqueci a Senha | Boralá Tche</title>
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="auth-shell">
+    <h1 class="marca" style="text-align:center;margin-bottom:8px"><img src="../img/logo.png" class="logo-icone" alt="Boralá Tche">Esqueci a senha</h1>
+    <p style="text-align:center;color:var(--cuia-suave);margin-bottom:24px">
+      Digite seu email — vamos te mandar um link pra criar uma senha nova.
+    </p>
+
+    <form onsubmit="event.preventDefault(); enviarRecuperacao();">
+      <input type="email" id="email" placeholder="Email" required>
+      <div id="mensagem-erro"></div>
+      <div id="mensagem-sucesso" style="color:#2FA86B;font-size:.85rem;min-height:1.2em"></div>
+      <button type="submit" id="btnEnviar">Enviar link</button>
+    </form>
+
+    <p style="text-align:center;margin-top:16px;color:var(--cuia-suave)">
+      Lembrou a senha? <a href="index.html" style="color:var(--coral-quero)">Entrar</a>
+    </p>
+  </div>
+
+  <script type="module" src="../js/esqueci-senha.js"></script>
+</body>
+</html>
